@@ -1,36 +1,72 @@
-# Jogo-Midnight-Warriors
+# Midnight Warriors 
+Midnight Warriors é um jogo RPG de simulação de batalhas estratégicas por turnos, ambientado em um universo de fantasia e misticidade, onde estratégia, gerenciamento de recursos e tomada de decisão são fundamentais para a vitória.
 
-Apresentação:
-    Um jogo rpg de simulação de batalha estratégic de turnos, baseado em historias de misticidade e fantasia. Neste,Um reino mistico, mantem
-a paz atraves de um antigo ritual conhecido como o Grande Torneio.A cada geração, os dois maiores clãns do mundo — a Alianca da Luz e a Horda das Sombras — enviam seus melhores campeões para uma arena sagrada onde ocorre um compate estratégio por pela ordem e dominínio, o vencedor se torna detentor do controle natural de todas as funtes de energia mágica do mundo e isto perdura até o próximmo alinhamento planetário onde outra nova geração terá o direito de contestar este domínio em pitro grande confronto. Você ́e o "Senhor da Guerra", um general renomado responsável por organizar e comandar esses exercitos na simulação da batalha oficial do torneio, escolha seu lado,seus campeões, defina sua estratégia e vá a luta! mas tenha cuidado de que se falhar toda a geração falhará em conjunto!!
+# Visão Geral
+Em um reino místico, a paz é mantida por meio de um antigo ritual conhecido como O Grande Torneio.
+A cada geração, os dois maiores clãs do mundo — Aliança da Luz e Horda das Sombras — enviam seus melhores campeões para uma arena sagrada, onde ocorre um confronto estratégico pelo domínio das fontes de energia mágica do mundo.
+O vencedor do torneio obtém o controle absoluto dessas energias até o próximo alinhamento planetário, quando uma nova geração poderá desafiar esse poder em mais um grande confronto
+O jogador assume o papel do Senhor da Guerra, um general responsável por organizar e comandar os exércitos durante a simulação oficial do torneio.
+Escolha seu clã, selecione seus campeões, defina sua estratégia e conduza sua geração à vitória — pois o fracasso de um líder representa o fracasso de toda uma era.
 
-Regras:     
-    1. O universo do jogo é delimitado pelos combatentes e a arena
-    2. Cada combatente tem exatos 1 turno para realizar uma ação
-    3. 2 ações podem ser tomadas atacar e usar a hailidade unica 
-        atacar -> atacar é um movimento basico e natural a todos os combatentes, ataques basicos causam dano no adversáro em campo,apenas ataques basicos de magos acumulam energia magica.
+# Mecânicas do Jogo
+Combate baseado em turnos
+Ordem de ações aleatória
+Ênfase em estratégia e adaptação
+Gerenciamento de recursos (Mana, Vigor, Precisão)
+Classes com estilos de jogo distintos
 
-        Habiçidade unica -> cada classe tem uma habilidade unica que pode ser ativada repetidas vezes, mas gasta certa quantidade de energia magica seja mana ou vigor a cada conjuração, se o usuario não tem a quantidade de energia minima para usar a habilidade então eta não poderá ser conjurada
-    4. Tanto ordem quanto prioridade dos atacantes é completamente aleatória uma vez que o objetivo do jogo é explorar a criatividade estrategica estimulando o jogador a criar planos para solução de todas os possiveis cenarios para a problematica no combate.
-    5. O jogo acaba quando o ultimo combatente do adversário for derrotado,terem seus pv(pontos de vida) reduzidos a 0.
+# Regras Básicas
 
-Classes :
-    Este jogo conta com 3 classes e 2 clãs (luz e escuridão), logo todas as classes tem um personagem equivalente para cada clã respectivo, estas são:
-   
-    O Guardião de Ferro (Tanque): Soldados robustos treinados para resistir. Eles lutam usando armas pesadas e escudos.
-    • Recurso Especial: Possuem vigor(determinação), que aculmulam ao sofrer ou realizar ataques  
-    • Habilidade Unica: Graças aos seus escudos, os Guardiões têm uma chance natural de Bloqueio e se tiverem Vigor suficiente, podem anular completamente o dano de um ataque recebido.
+1- O universo do jogo é delimitado pela arena e pelos combatentes.
+2- Cada combatente possui 1 turno para realizar uma ação.
+3- Em um turno, o combatente pode executar uma das seguintes ações: Atacar ou Usar a Habilidade Única
 
-    2. O Arcanista (Mago): Sábios detentores de magia que manipulam as energias da mítica ao cosmos. São fisica-mente frágeis, mas consideravelmente destrutivos.
-    • Recurso Especial: Eles possuem Magia (Mana), magos recuperam a mana gasta ao realizar ataques basicos.
-    • Habilidade Unica: Seus ataques principais são feitiços que consomem Magia para causar danos devastadores. Se a Magia acabar, eles são forçados a usar ataques físicos fracos, mas que, curiosamente, permitem que eles meditem e recuperem um pouco de sua Magia durante o golpe.
+    Ataque
+    Ação básica comum a todos os combatentes,subtrai os pontos de vida do adversario com base nos pontos de dano do usuário.Apenas ataques básicos dos Magos recuperam energia mágica.
+    
+    Habilidade Única
+    Cada classe possui uma habilidade exclusiva.O uso consome um recurso específico (Mana ou Vigor).Caso o combatente não possua energia suficiente, a habilidade não poderá ser utilizada.
 
-    3. O Caçador (Atirador): Mestres da furtividade e do combate à distância. Não dependem de recursos limitados, mas de sua habilidade técnica.
-    •  Característica Física: São ágeis, mas possuem a menor quantidade de vida
-    base entre todos.
-    • Habilidade Unica:  Eles dominam a Precisão(proeficiencia). Todo ataque de um Caçador tem uma chance de atingir um ponto vital (Acerto Crítico), o que dobra o impacto do ferimento causado no oponente(dobra o dano).
+4- A ordem e a prioridade das ações são completamente aleatórias, incentivando a criatividade estratégica do jogador ao instigar a criar planos de solução para todas os possíveis cenários no combate.
+5- O jogo termina quando todos os combatentes de um dos lados têm seus PV (Pontos de Vida) reduzidos a 0.
 
+# Classes Disponíveis
+O jogo possui 3 classes principais, cada uma com versões para os dois clãs (Luz e Escuridão).
 
+@Guardião de Ferro (Tanque)
+Soldados robustos treinados para resistir aos ataques inimigos. Lutam utilizando armas pesadas e escudos.
 
+Recurso Especial: Vigor (Determinação) — acumulado ao atacar ou sofrer ataques.
 
+Habilidade Única: Possuem uma chance natural de Bloqueio e, caso tenham Vigor suficiente, podem anular completamente o dano de um ataque recebido.
 
+@ Arcanista (Mago)
+Sábios que manipulam as energias místicas do cosmos. São frágeis fisicamente, mas extremamente destrutivos.
+
+Recurso Especial: Magia (Mana) — recuperada ao realizar ataques básicos.
+
+Habilidade Única: Conjuram feitiços no lugar de usarem ataques básicos que consomem Mana e causam grandes quantidades de dano. Caso a Mana se esgote, utilizam ataques físicos fracos que permitem recuperar parte da Magia durante o ataque.
+
+@ Caçador (Atirador)
+Especialistas em furtividade e combate à distância. Não dependem de recursos mágicos, mas de habilidade técnica, maestria e precisão.
+
+Característica Física: Alta agilidade,destreza porém possim a maior fragilidade entre as classes.
+
+Habilidade Única: Dominam a Precisão (Proficiência). Cada ataque possui uma chance de causar Acerto Crítico, atingindo pontos vitais do oponente e dobrando o dano causado.
+
+# Tecnologias Utilizadas
+Java
+Programação Orientada a Objetos (POO)
+Versionamento com Git e GitHub
+
+# Status do Projeto
+Em desenvolvimento
+Funcionalidades sendo implementadas e balanceadas.
+
+# Objetivo do Projeto
+Este projeto tem como objetivo:
+Aplicar conceitos de POO
+Trabalhar lógica de jogos por turnos
+Explorar design de classes e balanceamento
+Explorar design de arte para games
+Simular combates estratégicos de forma modular e extensível
