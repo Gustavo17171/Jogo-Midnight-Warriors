@@ -20,8 +20,8 @@ public Atirador (String cacador, double precisao, int vida, int atqBasico, int i
 
 public int Ataque(){  
     // habilidade unica: acerto critico     
-        if (Math.random() >= precisao){
-            return (int) (atqBasico/precisao) ;
+        if (Math.random() < precisao){
+            return (atqBasico * 2) ;
         }
         else{
         return atqBasico;
