@@ -35,12 +35,12 @@ public int Ataque(){
 }
 class Atirador_Luz extends Atirador {
     public Atirador_Luz(int identidade){ 
-    super("Cacador da Luz",0.5, 100, 25, identidade);
+    super("Cacador da Luz",0.3, 65, 30 , identidade);
     }  
 }
 
 class Atirador_Sombra extends Atirador {
     public Atirador_Sombra(int identidade){
-    super("Cacador da Sombra",0.5, 100, 25, identidade);
+    super("Cacador da Sombra",0.3, 65, 30, identidade);
     }
 }
