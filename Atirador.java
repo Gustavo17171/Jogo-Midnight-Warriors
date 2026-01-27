@@ -18,7 +18,7 @@ public Atirador (String cacador, double precisao, int vida, int atqBasico, int i
     this.identidade = identidade;
 }
 
-public int Ataque(){  
+public int ataque(){  
     // habilidade unica: acerto critico     
         if (Math.random() < precisao){
             return (atqBasico * 2) ;

@@ -20,7 +20,7 @@ public abstract class Mago {
         this.identidade = identidade;
     }
 
-    public int Ataque() {
+    public int ataque() {
         //Habilidade Unica
         if (mana >= 30) {
             mana -= 30;

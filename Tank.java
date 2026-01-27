@@ -12,13 +12,15 @@ public abstract class Tank {
     private int identidade;
 
 public Tank (String Guardiao_de_ferro, int vigor, int vida, int atqBasico, int Bloqueio,int identidade) {
-    this.Guardião_de_ferro = Guardiao_de_ferro;
+    this.Guardiao_de_ferro = Guardiao_de_ferro;
     this.vigor = vigor;
     this.vida = vida;
     this.atqBasico = atqBasico;
     this.Bloqueio = Bloqueio;
     this.identidade = identidade;
 }
+
+
     
 public int ataque() {
 
@@ -30,6 +32,7 @@ public int ataque() {
     return atqBasico;
 }
 
+}
 class Tank_Luz extends Tank {
     public Tank_Luz(int identidade){
     super("Guardiao de ferro da Luz", 100, 120, 20, 300,identidade);
@@ -39,5 +42,7 @@ class Tank_Luz extends Tank {
 class Tank_Sombra extends Tank {
     public Tank_Sombra(int identidade){    
     super("Guardiao de ferro da Sombra",100, 120, 20, 300,identidade);
-    }
 }
+}
+}
+
