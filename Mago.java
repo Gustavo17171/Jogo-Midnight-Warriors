@@ -5,18 +5,21 @@ import java.awt.*;
 
 public abstract class Mago {
     private String Arcanista;
+    public enum Lado { LUZ, SOMBRA }
     private int mana;
     private int vida;
     private int atqBasico;
     private int magia;
+    private Lado lado;
     private int identidade;
 
-    public Mago(String Arcanista, int mana, int vida, int atqB, int magia,int identidade) {
+    public Mago(String Arcanista, int mana, int vida, int atqB, int magia,Lado lado,int identidade) {
         this.Arcanista = Arcanista;
         this.mana = mana;
         this.vida = vida;
         this.atqBasico = atqB;
         this.magia = magia;
+        this.lado = lado;
         this.identidade = identidade;
     }
 
@@ -32,17 +35,27 @@ public abstract class Mago {
 
         }
     }
+    public void perderPV(int dano){
+        this.vida -= dano;
+        if (this.vida <= 0){
+            if (this.lado == Lado.LUZ){
+                System.out.println("Um Mago da Luz foi derrotado");
+            } else {
+                System.out.println("Um Mago da Sombra foi derrotado");
+            }
+        }
+    }
 
 }
 
 class MagoLuz extends Mago {
     public MagoLuz(int identidade) {
-        super("Arcanista da Luz", 100, 75, 15, 40, identidade);
+        super("Arcanista da Luz", 100, 75, 15, 40, Lado.LUZ, identidade);
     }
 }
 
 class MagoSombra extends Mago {
     public MagoSombra(int identidade) {
-        super("Arcanista da Sombra", 100, 75, 15, 40, identidade);
+        super("Arcanista da Sombra", 100, 75, 15, 40, Lado.SOMBRA, identidade);
     }
 }
