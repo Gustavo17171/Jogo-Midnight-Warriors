@@ -1,4 +1,10 @@
 import java.util.*;
+import java.awt.*;
+import java.io.*;
+import java.net.*;
+import javax.swing.*;
+import javax.imageio.*;
+
 
 public abstract class Combatente {
     protected int vida;
