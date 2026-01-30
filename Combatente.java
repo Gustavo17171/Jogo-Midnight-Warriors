@@ -10,10 +10,17 @@ public abstract class Combatente {
     protected int vida;
     protected String nome;
     protected Random random;
+    private int x;
+    private int y;
+    private String caminho;
 
-    public Combatente(int vida, String nome){
+
+    public Combatente(int vida, String nome, int x, int y, String caminho){
         this.vida = vida;
         this.nome = nome;
+        this.x = x;
+        this.y = y;
+        this.caminho = caminho;
         this.random = new Random();
     }
 
@@ -33,4 +40,7 @@ public abstract class Combatente {
         return this.vida > 0;
     }
 
+    public String getNome(){
+        return this.nome;
+    }
 }

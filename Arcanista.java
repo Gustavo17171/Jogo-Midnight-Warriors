@@ -11,21 +11,15 @@ public abstract class Arcanista extends Combatente {
     private int atqBasico;
     private int magia;
     private int id;
-    private int x;
-    private int y;
-    private String caminho;
     JLabel ArcanistaImagem;
     private URL url;
 
-    public Arcanista(String Arcanista,String caminho, int mana, int vida, int atqB, int magia,int id, int x, int y) {
-        super(vida, Arcanista);
+    public Arcanista(String nome,String caminho, int mana, int vida, int atqB, int magia,int id, int x, int y) {
+     super(vida, nome, x, y, caminho);
         this.mana = mana;
         this.atqBasico = atqB;
         this.magia = magia;
         this.id = id;
-        this.x = x;
-        this.y = y;
-        this.caminho = caminho;
         url = Arcanista.class.getResource(caminho);
 
         if(url != null){

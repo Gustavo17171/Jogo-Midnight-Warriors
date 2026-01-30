@@ -9,20 +9,14 @@ public abstract class Cacador extends Combatente {
     private double precisao;
     private int atqBasico;
     private int id;
-    private int x;
-    private int y;
-    private String caminho;
     JLabel CacadorImagem;
     private URL url;
 
 public Cacador (String nome,String caminho, double precisao, int vida, int atqBasico, int id, int x, int y){ 
-    super(vida, nome);
+    super(vida, nome, x, y, caminho);
     this.precisao = precisao;
     this.atqBasico = atqBasico;
     this.id = id;
-    this.x = x;
-    this.y = y;
-    this.caminho = caminho;
     url = Cacador.class.getResource(caminho);
 
     if(url != null){
