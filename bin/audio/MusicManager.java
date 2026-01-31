@@ -8,7 +8,7 @@ public class MusicManager {
     private static Clip clip;
 
     public static void playLoop(String path) {
-        stop();
+        stop(); // para qualquer música tocando
 
         try {
             URL url = MusicManager.class.getResource(path);
@@ -23,6 +23,7 @@ public class MusicManager {
             clip.loop(Clip.LOOP_CONTINUOUSLY);
 
         } catch (Exception e) {
+            System.out.println("Erro ao tocar música: " + path);
             e.printStackTrace();
         }
     }
