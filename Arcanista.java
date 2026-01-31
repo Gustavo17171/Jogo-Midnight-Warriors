@@ -32,6 +32,15 @@ public abstract class Arcanista extends Combatente {
         }
     }
 
+    public void Ultimate(Combatente alvo) {
+        if(Math.random() < 0.05) {
+            mana = 0;
+            alvo.receberDano(200);
+            System.out.println(this.nome + "Recebeu um poder oculto e causou 200 de dano no alvo!");
+            
+
+        }
+    }
     
     @Override
     public void atacar(Combatente alvo){ 
@@ -48,17 +57,17 @@ public abstract class Arcanista extends Combatente {
 
     public static class ArcanistaLuz extends Arcanista {
     public ArcanistaLuz(int id, int x, int y) {
-        super("Arcanista da Luz", "../imagens/ArcanistaLuz.png", 100, 70, 15, 40, id, x, y);
+        super("Arcanista da Luz", "../imagens/ArcanistaLuz.png", 100, 90, 15, 40, id, x, y);
         ArcanistaImagem.putClientProperty("id", "Arcanista_Luz");
     }
 }
 
 public static class ArcanistaSombra extends Arcanista {
     public ArcanistaSombra(int id, int x, int y) {
-        super("Arcanista da Sombra", "../imagens/ArcanistaSombra.png", 100, 70, 15, 40, id, x, y);
+        super("Arcanista da Sombra", "../imagens/ArcanistaSombra.png", 100, 90, 15, 40, id, x, y);
         ArcanistaImagem.putClientProperty("id", "Arcanista_Sombra");
     }   
 }
-}
 
+}
 
