@@ -31,16 +31,34 @@ public Cacador (String nome,String caminho, double precisao, int vida, int atqBa
     CacadorImagem.setBounds(x, y, 200, 200);
 }
 
+public boolean Furtividade() {
+    if(Math.random() < 0.1) {
+        System.out.println(this.nome + " entrou em furtividade e evitou o proximo ataque!");
+        return true;
+    }
+    return false;
+}
+
+@Override
+public void receberDano(int dano) {
+    if (!Furtividade()) {
+        this.vida -= dano;
+    }
+}
+
+
+
 @Override
 public void atacar(Combatente alvo){  
     // habilidade unica: acerto critico     
         if (Math.random() < precisao){
             System.out.println(this.nome + " acertou um Tiro Crítico!");
-            alvo.receberDano(atqBasico * 2);
+            alvo.receberDano(atqBasico * 2);    
         }
         else{
         alvo.receberDano(atqBasico);
         }
+
     }
 
 /*
@@ -49,17 +67,16 @@ public void atacar(Combatente alvo){
 
 public static class Cacador_Luz extends Cacador {
     public Cacador_Luz(int id, int x, int y){ 
-        super("Cacador da Luz", "../imagens/AtiradorLuz.png", 0.3, 65, 30 , id, x, y);
+        super("Cacador da Luz", "../imagens/AtiradorLuz.png", 0.3, 75, 30 , id, x, y);
         CacadorImagem.putClientProperty( "id", "Cacador da Luz");
     }  
 }
 
 public static class Cacador_Sombra extends Cacador {
     public Cacador_Sombra(int id, int x, int y){
-        super("Cacador da Sombra", "../imagens/AtiradorSombra.png", 0.3, 65, 30, id, x, y);
+        super("Cacador da Sombra", "../imagens/AtiradorSombra.png", 0.3, 75, 30, id, x, y);
     CacadorImagem.putClientProperty( "id", "Cacador_Sombra");   
     }
 }
 
 }
-
