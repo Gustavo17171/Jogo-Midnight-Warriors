@@ -1,12 +1,4 @@
 package jogo;
-import java.util.*;
-import java.awt.*;
-import java.io.*;
-import java.net.*;
-import javax.swing.*;
-import javax.imageio.*;
-
-
 import java.util.Random;
 
 
@@ -14,9 +6,15 @@ public abstract class Combatentes {
     protected int vida;
     protected String nome;
     protected Random random;
+    private int x;
+    private int y;
+    private final String caminho;
    
 
-    public Combatentes(int vida, String nome){
+    public Combatentes(int vida, String nome,int x, int y, String caminho){
+         this.x = x;
+         this.y = y;
+         this.caminho = caminho;
         this.vida = vida;
         this.nome = nome;
         this.random = new Random();

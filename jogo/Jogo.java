@@ -1,8 +1,6 @@
 package jogo;
 
 import java.util.*;
-
-import jogo.Combatentes;
 import personagens.*;
 
 public class Jogo {
@@ -14,16 +12,14 @@ public class Jogo {
 
         int total = qtdGuardiao +qtdMagos + qtdArqueiros;
         if(total >100){
-            throw new IllegalArgumentException(
-                "Máximo de 100 tropas"
-            );
+            throw new IllegalArgumentException(   "Máximo de 100 tropas");
         }
        this.nomeFaccao = nomeFaccao;
        this.exercito = new ArrayList<>();
         // Recruta as unidades baseadas nos parâmetros passados
-        recrutar("Guardião", qtdGuardiao);
+        recrutar("Guardiao", qtdGuardiao);
         recrutar("Arcanista", qtdMagos);
-        recrutar("Caçador", qtdArqueiros);
+        recrutar("Cacador", qtdArqueiros);
     }
 
     // Método auxiliar para criar as instâncias (Fábrica simples)
@@ -32,28 +28,17 @@ public class Jogo {
 
             switch (tipo) {
                 case "Guardiao" ->
-                    exercito.add(
-                        nomeFaccao.contains("Luz")
-                        ? new Guardiao.Guardiao_Luz()
-                        : new Guardiao.Guardiao_Sombra()
-                    );
+                    exercito.add( nomeFaccao.contains("Luz")? new Guardiao.Guardiao_Luz(i, 0 , 0) : new Guardiao.Guardiao_Sombra(i,0,0) );
 
                 case "Arcanista" ->
-                    exercito.add(
-                        nomeFaccao.contains("Luz")
-                        ? new Arcanista.ArcanistaLuz()
-                        : new Arcanista.ArcanistaSombra()
-                    );
+                    exercito.add( nomeFaccao.contains("Luz")? new Arcanista.ArcanistaLuz(i, 0 , 0): new Arcanista.ArcanistaSombra(i,0,0) );
 
                 case "Cacador" ->
-                    exercito.add(
-                        nomeFaccao.contains("Luz")
-                        ? new Cacador.Cacador_Luz()
-                        : new Cacador.Cacador_Sombra()
-                    );
+                    exercito.add( nomeFaccao.contains("Luz") ? new Cacador.Cacador_Luz(i, 0 , 0) : new Cacador.Cacador_Sombra(i,0,0)  );
             }
         }
     }
+
    public String getNomeFaccao() {
         return nomeFaccao;
     }

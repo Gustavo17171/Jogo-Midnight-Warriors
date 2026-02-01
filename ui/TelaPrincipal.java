@@ -2,10 +2,9 @@ package ui;
 
 import javax.swing.*;
 import jogo.Jogo;
+import java.awt.Image;
 
 public class TelaPrincipal extends JFrame {
-
-    private Jogo jogoAtual;
 
     public TelaPrincipal() {
     configurarJanela();
@@ -13,7 +12,7 @@ public class TelaPrincipal extends JFrame {
     mostrarTelaDescanso();
 }
 
-private final void configurarJanela() {
+private void configurarJanela() {
     setTitle("Midnight Warriors");
     setSize(1000, 600);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
