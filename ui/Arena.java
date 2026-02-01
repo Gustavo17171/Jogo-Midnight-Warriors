@@ -3,12 +3,17 @@ package ui;
 import audio.MusicManager;
 import javax.swing.*;
 import java.net.URL;
+import personagens.Guardiao;
+import personagens.Cacador;
+import personagens.Guardiao;
+import jogo.Combatentes;
+import jogo.Combatentes;
 import jogo.Jogo;
-import java.awt.Image;
-import javax.swing.Timer;
-import javax.swing.SwingUtilities;
-public class Arena extends JPanel {
 
+
+import java.awt.Image;
+public class Arena extends JPanel {
+    private JLabel fundo;
     private final TelaPrincipal frame;
     private Timer timerBatalha;
     private final Jogo equipeLuz;
@@ -27,15 +32,27 @@ public class Arena extends JPanel {
 
         criarFundo();       // Fundo primeiro
         criarInterface();   // Interface depois
-
+        desenharCombatentes();
         MusicManager.playLoop("/audio/arena.wav");
         iniciarBatalha();
+        setComponentZOrder(fundo, getComponentCount() - 1);
     }
+    
+    private void desenharCombatentes() {
+         for (Combatentes c : equipeLuz.getVivos()) {
+        add(c.getImagem());
+    }
+
+    for (Combatentes c : equipeSombra.getVivos()) {
+        add(c.getImagem());
+    }
+
+    revalidate();
+    repaint();
+}
 
     private void criarFundo() {
         URL imgURL = getClass().getResource("/imagens/Tela_Arena.png");
-
-        JLabel fundo;
        
         if (imgURL != null) {
          ImageIcon icon = new ImageIcon(imgURL);

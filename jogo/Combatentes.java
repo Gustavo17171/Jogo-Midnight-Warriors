@@ -1,6 +1,10 @@
 package jogo;
 import java.util.Random;
 
+import javax.swing.JLabel;
+
+import javax.swing.JLabel;
+
 
 public abstract class Combatentes {
     protected int vida;
@@ -9,7 +13,7 @@ public abstract class Combatentes {
     private int x;
     private int y;
     private final String caminho;
-   
+    protected JLabel imagem;
 
     public Combatentes(int vida, String nome,int x, int y, String caminho){
          this.x = x;
@@ -18,6 +22,9 @@ public abstract class Combatentes {
         this.vida = vida;
         this.nome = nome;
         this.random = new Random();
+    }
+     public JLabel getImagem() {
+        return imagem;
     }
 
     public abstract void atacar(Combatentes alvo);

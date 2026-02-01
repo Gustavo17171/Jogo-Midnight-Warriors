@@ -11,8 +11,6 @@ public abstract class Arcanista extends Combatentes {
     protected final int ataque;
     protected final int magia;
     private final int id;
-    JLabel ArcanistaImagem;
-    URL url;
 
     public Arcanista(String nome, int vida, int ataque, int magia, int id, int x, int y, String caminho) {
         super(vida, nome, x, y, caminho);
@@ -22,20 +20,19 @@ public abstract class Arcanista extends Combatentes {
         this.ataque = ataque;
         this.magia = magia;
         
-        url = getClass().getResource(caminho);
+        URL url = getClass().getResource(caminho);
 
         if(url != null){
-            ImageIcon icon = new ImageIcon(url);
-            ArcanistaImagem = new JLabel(icon);
+            imagem = new JLabel(new ImageIcon(url));
         }
         
         else{
             System.out.println("Imagem nao encontrada: " + caminho);
-            ArcanistaImagem = new JLabel("Imagem nao encontrada");
+            imagem = new JLabel("Imagem nao encontrada");
         }
         
-        ArcanistaImagem.setName(nome);
-        ArcanistaImagem.setBounds(x, y, 200, 200);
+        imagem.setName(nome);
+        imagem.setBounds(x, y, 200, 200);
     }
 
 
@@ -68,14 +65,14 @@ public abstract class Arcanista extends Combatentes {
         
         public ArcanistaLuz(int id, int x, int y) {
             super("Arcanista da Luz", 80, 15, 40, id, x, y, "/imagens/arcanista_luz.png");
-            ArcanistaImagem.putClientProperty("id", "Arcanista_Luz");
+            imagem.putClientProperty("id", "Arcanista_Luz");
         }
     }
 
     public static class ArcanistaSombra extends Arcanista {
         public ArcanistaSombra(int id, int x, int y) {
             super("Arcanista da Sombra", 80, 15, 40, id, x, y, "/imagens/arcanista_sombra.png");
-            ArcanistaImagem.putClientProperty("id", "Arcanista_Sombra");
+            imagem.putClientProperty("id", "Arcanista_Sombra");
         }
     }
 

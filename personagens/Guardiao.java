@@ -11,7 +11,7 @@ public  abstract class Guardiao extends Combatentes {
     private int vigor;
     private final int ataque;
     private final int id;
-    JLabel GuardiaoImagem;
+    protected JLabel imagem;
     URL url;
 
    public Guardiao(String nome, int vida, int ataque, int id, int x, int y, String caminho) {
@@ -24,14 +24,14 @@ public  abstract class Guardiao extends Combatentes {
 
         if(url != null){
             ImageIcon icon = new ImageIcon(url);
-            GuardiaoImagem = new JLabel(icon);
+            imagem = new JLabel(icon);
         }
         else{
             System.out.println("Imagem nao encontrada: " + caminho);
-            GuardiaoImagem = new JLabel("Imagem nao encontrada");
+            imagem = new JLabel("Imagem nao encontrada");
         }
-        GuardiaoImagem.setName(nome);
-        GuardiaoImagem.setBounds(x, y, 200, 200);
+        imagem.setName(nome);
+        imagem.setBounds(x, y, 200, 200);
     }
 
     public void Bencao() {
@@ -104,15 +104,18 @@ public  abstract class Guardiao extends Combatentes {
     public static class Guardiao_Luz extends Guardiao {
         public Guardiao_Luz(int id, int x, int y) {
             super("Guardião da Luz", 120, 20,id, x, y, "/imagens/guardiao_luz.png");
-            GuardiaoImagem.putClientProperty("id", "Guardiao_Luz");
+            imagem.putClientProperty("id", "Guardiao_Luz");
         }
     }
 
     public static class Guardiao_Sombra extends Guardiao {
         public Guardiao_Sombra(int  id, int x, int y) {
             super("Guardião da Sombra", 120, 20, id, x, y, "/imagens/guardiao_sombra.png");
-            GuardiaoImagem.putClientProperty("id", "Guardiao_Sombra");
+            imagem.putClientProperty("id", "Guardiao_Sombra");
         }
     }
+    public JLabel getImagem() {
+    return imagem;
+}
 }
 
