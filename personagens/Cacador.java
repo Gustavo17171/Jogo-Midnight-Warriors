@@ -26,9 +26,10 @@ public abstract class Cacador extends Combatentes {
     public JLabel getImagem() {
         return imagem;
     }
+    
     public boolean Furtividade() {
         if(Math.random() <= 0.1) {
-            System.out.println(this.nome + id + " entrou em furtividade e evitou o proximo ataque!");
+            System.out.println(this.nome + id + " entrou em furtividade e evitou o proximo ataque!" + " Vida restante: " + this.vida);
             return true;
         }
         return false;
@@ -36,20 +37,15 @@ public abstract class Cacador extends Combatentes {
 
     @Override
     public void receberDano(int dano) {
-        if (Furtividade()) {
-            System.out.println(this.nome + id + " não sofreu dano.");
-            return;
+        if (!Furtividade()) {
+            this.vida -= dano;
+            if(this.vida < 0) {
+                this.vida = 0;
+            }
+            System.out.println(this.nome + id + " recebeu " + dano + " de dano. Vida restante: " + this.vida);
         }
-        this.vida -= dano;
-        if (this.vida < 0) {
-            this.vida = 0;
-        }
-        System.out.println(
-            this.nome + id + " recebeu " + dano +
-            " de dano | Vida restante: " + this.vida
-        );
-         if (this.vida == 0) {
-            System.out.println(this.nome + id + " foi derrotado!");
+        else{
+            dano = 0;
         }
     }
 
@@ -59,11 +55,12 @@ public abstract class Cacador extends Combatentes {
     public void atacar(Combatentes alvo){  
         // habilidade unica: acerto critico     
             if (Math.random() <= precisao){
-                System.out.println(this.nome + id + " acertou um Tiro Crítico!");
+                System.out.println(this.nome + id + " acertou um Tiro Crítico e causou " + (ataque * 2) + " de dano!");
                 alvo.receberDano(ataque * 2);    
             }
-            else{
-            alvo.receberDano(ataque);
+            else{ 
+                System.out.println(this.nome + id + " atacou e causou " + ataque + " de dano.");
+                alvo.receberDano(ataque);
             }
 
         }
