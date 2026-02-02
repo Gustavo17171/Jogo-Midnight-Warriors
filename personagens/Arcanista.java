@@ -11,6 +11,8 @@ public abstract class Arcanista extends Combatentes {
     protected final int ataque;
     protected final int magia;
     private final int id;
+    JLabel ArcanistaImagem;
+    URL url;
 
     public Arcanista(String nome, int vida, int ataque, int magia, int id, int x, int y, String caminho) {
         super(vida, nome, x, y, caminho);
@@ -20,59 +22,65 @@ public abstract class Arcanista extends Combatentes {
         this.ataque = ataque;
         this.magia = magia;
         
-        URL url = getClass().getResource(caminho);
+        url = getClass().getResource(caminho);
 
         if(url != null){
-            imagem = new JLabel(new ImageIcon(url));
+            ImageIcon icon = new ImageIcon(url);
+            ArcanistaImagem = new JLabel(icon);
         }
         
         else{
             System.out.println("Imagem nao encontrada: " + caminho);
-            imagem = new JLabel("Imagem nao encontrada");
+            ArcanistaImagem = new JLabel("Imagem nao encontrada");
         }
         
-        imagem.setName(nome);
-        imagem.setBounds(x, y, 200, 200);
+        ArcanistaImagem.setName(nome);
+        ArcanistaImagem.setBounds(x, y, 200, 200);
     }
 
 
     public void Ultimate(Combatentes alvo) {
         if(Math.random() <= 0.05) {
             mana = 0;
-            alvo.receberDano(200);
             System.out.println(this.nome + id + "  Recebeu um poder oculto e causou 200 de dano no alvo!");
+            alvo.receberDano(200);
             
 
+        }
+        else if (mana >= 30) {
+            mana -= 30;
+            System.out.println(nome + id + " lançou magia!");
+            alvo.receberDano(magia);
+        } 
+        else {
+            mana += 20;
+            System.out.println(nome + id + " usou ataque físico por falta de mana causando " + ataque + " de dano e recuperou 20 de mana!");
+            alvo.receberDano(ataque);
+            
         }
     }
     
     @Override
     public void atacar(Combatentes alvo){ 
         //Habilidade Unica
-  
-        if (mana >= 30) {
-            mana -= 30;
-            System.out.println(nome + id + " lançou magia!");
-            alvo.receberDano(magia);
-        } else {
-            mana += 20;
-            alvo.receberDano(ataque);
-        }
+            
+        Ultimate(alvo);
+        
     }
 
     // ===== VARIAÇÕES =====
     public static class ArcanistaLuz extends Arcanista {
         
         public ArcanistaLuz(int id, int x, int y) {
-            super("Arcanista da Luz", 80, 15, 40, id, x, y, "/imagens/arcanista_luz.png");
-            imagem.putClientProperty("id", "Arcanista_Luz");
+            super("Arcanista da Luz", 80, 15, 40, id, x, y, "../imagens/arcanista_luz.png");
+            ArcanistaImagem.putClientProperty("id", "Arcanista_Luz");
         }
     }
 
     public static class ArcanistaSombra extends Arcanista {
         public ArcanistaSombra(int id, int x, int y) {
-            super("Arcanista da Sombra", 80, 15, 40, id, x, y, "/imagens/arcanista_sombra.png");
-            imagem.putClientProperty("id", "Arcanista_Sombra");
+            super("Arcanista da Sombra", 80, 15, 40, id, x, y, "../imagens/arcanista_sombra.png");
+            ArcanistaImagem.putClientProperty("id", "Arcanista_Sombra");
         }
     }
 
