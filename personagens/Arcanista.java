@@ -28,25 +28,30 @@ public abstract class Arcanista extends Combatentes {
     public void Ultimate(Combatentes alvo) {
         if(Math.random() <= 0.05) {
             mana = 0;
-            alvo.receberDano(200);
             System.out.println(this.nome + id + "  Recebeu um poder oculto e causou 200 de dano no alvo!");
+            alvo.receberDano(200);
             
 
+        }
+        else if (mana >= 30) {
+            mana -= 30;
+            System.out.println(nome + id + " lançou magia!");
+            alvo.receberDano(magia);
+        } 
+        else {
+            mana += 20;
+            System.out.println(nome + id + " usou ataque físico por falta de mana causando " + ataque + " de dano e recuperou 20 de mana!");
+            alvo.receberDano(ataque);
+            
         }
     }
     
     @Override
     public void atacar(Combatentes alvo){ 
         //Habilidade Unica
-  
-        if (mana >= 30) {
-            mana -= 30;
-            System.out.println(nome + id + " lançou magia!");
-            alvo.receberDano(magia);
-        } else {
-            mana += 20;
-            alvo.receberDano(ataque);
-        }
+            
+        Ultimate(alvo);
+        
     }
 
     // ===== VARIAÇÕES =====
