@@ -9,7 +9,7 @@ public class Jogo {
     private String nomeFaccao; // "Aliança da Luz" ou "Horda das Sombras"
     private List<Combatentes> exercito; // Lista dinâmica para acomodar qualquer quantidade 
     
-    // Construtor: Define a facção e recruta as tropas iniciais
+    // ================= CONSTRUTOR DE JOGO =================
     public Jogo(String nomeFaccao, int qtdGuardiao, int qtdMagos, int qtdArqueiros) {
 
         int total = qtdGuardiao +qtdMagos + qtdArqueiros;
@@ -18,7 +18,7 @@ public class Jogo {
         }
        this.nomeFaccao = nomeFaccao;
        this.exercito = new ArrayList<>();
-        // Recruta as unidades baseadas nos parâmetros passados
+        
         recrutar("Guardiao", qtdGuardiao);
         recrutar("Arcanista", qtdMagos);
         recrutar("Cacador", qtdArqueiros);
@@ -31,7 +31,7 @@ public class Jogo {
         return vivos;
     }
 
-    // Método auxiliar para criar as instâncias (Fábrica simples)
+    // ================= METODOS AUXILIARES =================
     private void recrutar(String tipo, int qtd) {
         for (int i = 0; i < qtd; i++) {
 
@@ -47,8 +47,6 @@ public class Jogo {
             }
         }
     }
-
-    // Adicione este método na classe Arena.java
 
 
    public String getNomeFaccao() {
@@ -74,21 +72,27 @@ public class Jogo {
         
     }
 
-    
+    // ================= RODA O JOGO =================
     public static void executarRodada(Jogo luz, Jogo sombra) {
-        
-        Combatentes atacanteLuz = luz.alvoAleatorio();
-        Combatentes atacanteSombra = sombra.alvoAleatorio();
-        if (!luz.temSoldadosVivos()  || !sombra.temSoldadosVivos()) return;
 
-        atacanteLuz.moverPara(450, 300);
-        atacanteSombra.moverPara(550, 300);
-        atacanteLuz.atacar(atacanteSombra);
-        
-        if (atacanteSombra.estaVivo()) {
+    if (!luz.temSoldadosVivos() || !sombra.temSoldadosVivos()) return;
+
+    Combatentes atacanteLuz = luz.alvoAleatorio();
+    Combatentes atacanteSombra = sombra.alvoAleatorio();
+
+    System.out.println(" Nova rodada!");
+    System.out.println("Luz ataca primeiro!");
+
+    atacanteLuz.atacar(atacanteSombra);
+
+    if (atacanteSombra.estaVivo()) {
+        System.out.println("Sombra revida!");
         atacanteSombra.atacar(atacanteLuz);
+    } else {
+        System.out.println("Um combatente da Sombra caiu!");
     }
-    
+
+
     atacanteLuz.voltarPosicao();
     atacanteSombra.voltarPosicao();
     luz.removerMortos();

@@ -81,3 +81,6 @@ Explorar design de classes e balanceamento
 Explorar design de arte para games
 
 Simular combates estratégicos de forma modular e extensível
+
+# Requisitos de execução 
+ O projeto foi desenvolvido em Java e utiliza apenas recursos da JDK padrão, não sendo necessárias dependências externas. A execução pode ser realizada tanto pelo botão Run da IDE quanto diretamente pelo terminal. Quando executado via linha de comando, é necessário utilizar o comando java -cp bin Main, pois o parâmetro -cp bin informa à JVM o diretório onde estão localizados os arquivos compilados (.class), permitindo que a classe principal seja encontrada corretamente. Nas IDEs, esse processo é automatizado, o que explica o funcionamento direto pelo botão de execução. Dessa forma, ambas as formas de execução são válidas e equivalentes, diferindo apenas na forma como o classpath é configurado.

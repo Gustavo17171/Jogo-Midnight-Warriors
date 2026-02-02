@@ -3,15 +3,14 @@ package ui;
 import audio.MusicManager;
 import javax.swing.*;
 import java.net.URL;
-import personagens.Guardiao;
-import personagens.Cacador;
-import personagens.Guardiao;
+import java.awt.*;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import jogo.Combatentes;
 import jogo.Jogo;
 
-
-import java.awt.Image;
 public class Arena extends JPanel {
+
     private JLabel fundo;
     private final TelaPrincipal frame;
     private Timer timerBatalha;
@@ -20,105 +19,69 @@ public class Arena extends JPanel {
     private JLabel lblLuz;
     private JLabel lblSombra;
 
-    public Arena( TelaPrincipal frame, int gL, int mL, int aL, int gS, int mS, int aS ) {
+   // ================= LOG VISUAL =================
+    private JTextArea logArea;
+
+    public Arena(TelaPrincipal frame, int gL, int mL, int aL, int gS, int mS, int aS) {
 
         this.frame = frame;
-
         equipeLuz = new Jogo("Aliança da Luz", gL, mL, aL);
         equipeSombra = new Jogo("Horda das Sombras", gS, mS, aS);
 
         setLayout(null);
 
-        criarFundo();       // Fundo primeiro
-        criarInterface();   // Interface depois
+        criarFundo();
+        criarInterface();
+        criarLog();
         desenharCombatentes();
+
         MusicManager.playLoop("/audio/arena.wav");
+        redirecionarConsole();
         iniciarBatalha();
+
         setComponentZOrder(fundo, getComponentCount() - 1);
     }
-    
-    private void desenharCombatentes() {
-        // --- PREPARAÇÃO: ORDENAR AS LISTAS ---
-        // Define a ordem de prioridade: Guardião (1) -> Caçador (2) -> Arcanista (3)
-        java.util.Comparator<Combatentes> ordemVisual = (c1, c2) -> {
-            int p1 = (c1 instanceof Guardiao) ? 1 : (c1 instanceof Cacador) ? 2 : 3;
-            int p2 = (c2 instanceof Guardiao) ? 1 : (c2 instanceof Cacador) ? 2 : 3;
-            return Integer.compare(p1, p2);
-        };
 
-        // Cria listas temporárias ordenadas para não bagunçar a lógica do jogo
-        java.util.List<Combatentes> vivosLuz = new java.util.ArrayList<>(equipeLuz.getVivos());
-        vivosLuz.sort(ordemVisual);
+    // ================= LOG =================
+    private void criarLog() {
+        logArea = new JTextArea();
+        logArea.setEditable(false);
+        logArea.setLineWrap(true);
 
-        java.util.List<Combatentes> vivosSombra = new java.util.ArrayList<>(equipeSombra.getVivos());
-        vivosSombra.sort(ordemVisual);
-
-        // --- LUZ (Lado Esquerdo) ---
-        // Início em 100, mas vamos preencher de TRÁS PRA FRENTE visualmente
-        // para que o Tank (índice 0) fique na frente de batalha (maior X)
-        int inicioX_Luz = 100; 
-        int inicioY_Luz = 200; 
-        int col = 0;
-        int linha = 0;
-
-        for (Combatentes c : vivosLuz) {
-            JLabel lbl = c.getImagem();
-            
-            // TRUQUE: Invertemos a coluna para a Luz. 
-            // Coluna 0 (Tank) vai para X mais longe (Frente). Coluna 2 (Mago) fica no X inicial (Fundo).
-            // (2 - col) faz: 2->0, 1->1, 0->2
-            int x = inicioX_Luz + ((2 - col) * 60); 
-            int y = inicioY_Luz + (linha * 90); 
-
-            lbl.setBounds(x, y, 100, 100);
-            c.setPosicaoOriginal(x, y); 
-            add(lbl);
-
-            col++;
-            if (col > 2) { col = 0; linha++; }
-        }
-
-        // --- SOMBRA (Lado Direito) ---
-        // Aqui a lógica padrão funciona: Indice 0 (Tank) fica no menor X (Frente da Sombra)
-        int inicioX_Sombra = 700; 
-        int inicioY_Sombra = 200; 
-        col = 0;
-        linha = 0;
-
-        for (Combatentes c : vivosSombra) {
-            JLabel lbl = c.getImagem();
-            
-            int x = inicioX_Sombra + (col * 60); 
-            int y = inicioY_Sombra + (linha * 90);
-
-            lbl.setBounds(x, y, 100, 100);
-            c.setPosicaoOriginal(x, y);
-            add(lbl);
-
-            col++;
-            if (col > 2) { col = 0; linha++; }
-        }
+        JScrollPane scroll = new JScrollPane(logArea);
+        scroll.setBounds(50, 480, 900, 100);
+        add(scroll);
     }
 
+    private void redirecionarConsole() {
+        PrintStream ps = new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) {
+                SwingUtilities.invokeLater(() ->
+                    logArea.append(String.valueOf((char) b))
+                );
+            }
+        });
+        System.setOut(ps);
+    }
 
-    
+    // ================= FUNDO =================
     private void criarFundo() {
         URL imgURL = getClass().getResource("/imagens/Tela_Arena.png");
-       
+
         if (imgURL != null) {
-         ImageIcon icon = new ImageIcon(imgURL);
-         Image img = icon.getImage().getScaledInstance(1000, 600, java.awt.Image.SCALE_SMOOTH);
-         fundo = new JLabel(new ImageIcon(img));
-        } 
-        else {
-            fundo = new JLabel("Imagem da arena não encontrada");
-            System.out.println("ERRO: /imagens/Tela_Arena.png não encontrada");
+            Image img = new ImageIcon(imgURL).getImage()
+                    .getScaledInstance(1000, 600, Image.SCALE_SMOOTH);
+            fundo = new JLabel(new ImageIcon(img));
+        } else {
+            fundo = new JLabel("Imagem não encontrada");
         }
 
         fundo.setBounds(0, 0, 1000, 600);
         add(fundo);
     }
 
+    // ================= INTERFACE =================
     private void criarInterface() {
         JLabel titulo = new JLabel("ARENA DE COMBATE");
         titulo.setBounds(360, 20, 200, 30);
@@ -135,72 +98,88 @@ public class Arena extends JPanel {
         atualizarHUD();
     }
 
+    private void atualizarHUD() {
+        lblLuz.setText("Luz: " + equipeLuz.getVivos().size() + " vivos");
+        lblSombra.setText("Sombra: " + equipeSombra.getVivos().size() + " vivos");
+    }
 
-    // Atualiza a arena após mortes
-private void atualizarSprites() {
-        // 1. Limpa a tela
+    // ================= BATALHA =================
+    private void iniciarBatalha() {
+        timerBatalha = new Timer(2200, e -> {
+
+            if (equipeLuz.temSoldadosVivos() && equipeSombra.temSoldadosVivos()) {
+
+                animarAtaque();
+
+            } else {
+                timerBatalha.stop();
+                finalizarBatalha();
+            }
+        });
+
+        timerBatalha.start();
+    }
+
+    // ================= ANIMAÇÃO =================
+    private void animarAtaque() {
+
+        Combatentes luz = equipeLuz.alvoAleatorio();
+        Combatentes sombra = equipeSombra.alvoAleatorio();
+
+        Timer anim = new Timer(20, null);
+        anim.addActionListener(e -> {
+
+            moverSuave(luz, 450, 300);
+            moverSuave(sombra, 550, 300);
+
+            if (Math.abs(luz.getX() - 450) < 5) {
+                anim.stop();
+
+                Jogo.executarRodada(equipeLuz, equipeSombra);
+
+                luz.voltarPosicao();
+                sombra.voltarPosicao();
+
+                equipeLuz.removerMortos();
+                equipeSombra.removerMortos();
+
+                atualizarHUD();
+                atualizarSprites();
+            }
+        });
+
+        anim.start();
+    }
+
+    private void moverSuave(Combatentes c, int alvoX, int alvoY) {
+        int dx = (alvoX - c.getX()) / 10;
+        int dy = (alvoY - c.getY()) / 10;
+        c.moverPara(c.getX() + dx, c.getY() + dy);
+    }
+
+    // ================= SPRITES =================
+    private void desenharCombatentes() {
+        for (Combatentes c : equipeLuz.getVivos()) add(c.getImagem());
+        for (Combatentes c : equipeSombra.getVivos()) add(c.getImagem());
+    }
+
+    private void atualizarSprites() {
         removeAll();
-
-        // 2. Adiciona a Interface (Textos)
-        add(lblLuz);
-        add(lblSombra);
-        JLabel titulo = new JLabel("ARENA DE COMBATE");
-        titulo.setBounds(360, 20, 200, 30);
-        add(titulo);
-
-
-        // 3. Adiciona os Bonecos (Vivos)
+        criarInterface();
+        criarLog();
         desenharCombatentes();
-
-        // 4. Adiciona o Fundo
         add(fundo);
-
-       
-        if (getComponentCount() > 0) {
-            setComponentZOrder(fundo, getComponentCount() - 1);
-        }
-
-        revalidate();
+        setComponentZOrder(fundo, getComponentCount() - 1);
         repaint();
     }
-
-    private void atualizarHUD() {
-        SwingUtilities.invokeLater(() -> {
-            lblLuz.setText("Luz: " + equipeLuz.getVivos().size() + " vivos");            
-            lblSombra.setText("Sombra: " + equipeSombra.getVivos().size() + " vivos");
-        });
-    }
-
-    private void iniciarBatalha() {
-    timerBatalha = new Timer(2000, e -> { 
-        if (equipeLuz.temSoldadosVivos() && equipeSombra.temSoldadosVivos()) { 
-            
-            Jogo.executarRodada(equipeLuz, equipeSombra); 
-            
-            equipeLuz.removerMortos();
-            equipeSombra.removerMortos(); // Atualiza os sprites após remover os mortos
-            
-
-            atualizarHUD();
-
-            //atualização visual dos combatentes
-            atualizarSprites();
-
-
-
-        } else { 
-            timerBatalha.stop();
-            finalizarBatalha();
-        }
-    });
-
-    timerBatalha.start();
-}
+    // ================= FINALIZA A BATALHA =================
     private void finalizarBatalha() {
         MusicManager.stop();
-        SwingUtilities.invokeLater(() -> { String vencedor = equipeLuz.temSoldadosVivos() ? equipeLuz.getNomeFaccao() : equipeSombra.getNomeFaccao();
-        JOptionPane.showMessageDialog( this, "🏆 Vitória da " + vencedor );
-        frame.mostrarTelaDescanso();        });
+        JOptionPane.showMessageDialog(this,
+                "🏆 Vitória da " +
+                (equipeLuz.temSoldadosVivos()
+                        ? equipeLuz.getNomeFaccao()
+                        : equipeSombra.getNomeFaccao()));
+        frame.mostrarTelaDescanso();
     }
-
 }

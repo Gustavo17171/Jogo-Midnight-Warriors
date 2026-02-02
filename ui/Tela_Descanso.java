@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.net.URL;
 import java.awt.Image;
 
+// ================= CONSTRUDOR DE TELA DE DESCANSO =================
 public class Tela_Descanso extends JPanel {
 
     private final TelaPrincipal frame;
@@ -28,6 +29,7 @@ public class Tela_Descanso extends JPanel {
         fundo.add(btnStart);
     }
 
+        // ================= FUNDO =================
         private JLabel criarFundo() {
         URL imgURL = getClass().getResource("/imagens/Tela_Descanso.png");
 
