@@ -11,32 +11,24 @@ public abstract class Cacador extends Combatentes {
     private final double precisao;
     private final int ataque;
     private final int id;
-    JLabel CacadorImagem;
-    URL url;
+    
+    private URL url;
     
     public Cacador (String nome, int vida,double precisao, int ataque,int id, int x, int y, String caminho){ 
         super(vida, nome, x, y, caminho);
         this.precisao = precisao;
         this.ataque = ataque;
         this.id = id;
-        url = getClass().getResource(caminho);
-
-        if(url != null){
-            ImageIcon icon = new ImageIcon(url);
-            CacadorImagem = new JLabel(icon);
-        }
-        else{
-            System.out.println("Imagem nao encontrada: " + caminho);
-            CacadorImagem = new JLabel("Imagem nao encontrada");
-        }
-        CacadorImagem.setName(nome);
-        CacadorImagem.setBounds(x, y, 200, 200);
+         imagem = new JLabel(new ImageIcon(getClass().getResource(caminho)));
+       imagem.setBounds(x, y, 200, 200);
     }
 
-
+    public JLabel getImagem() {
+        return imagem;
+    }
     public boolean Furtividade() {
         if(Math.random() <= 0.1) {
-            System.out.println(this.nome + id + " entrou em furtividade e evitou o proximo ataque!" + " Vida restante: " + this.vida);
+            System.out.println(this.nome + id + " entrou em furtividade e evitou o proximo ataque!");
             return true;
         }
         return false;
@@ -44,15 +36,20 @@ public abstract class Cacador extends Combatentes {
 
     @Override
     public void receberDano(int dano) {
-        if (!Furtividade()) {
-            this.vida -= dano;
-            if(this.vida < 0) {
-                this.vida = 0;
-            }
-            System.out.println(this.nome + id + " recebeu " + dano + " de dano. Vida restante: " + this.vida);
+        if (Furtividade()) {
+            System.out.println(this.nome + id + " não sofreu dano.");
+            return;
         }
-        else{
-            dano = 0;
+        this.vida -= dano;
+        if (this.vida < 0) {
+            this.vida = 0;
+        }
+        System.out.println(
+            this.nome + id + " recebeu " + dano +
+            " de dano | Vida restante: " + this.vida
+        );
+         if (this.vida == 0) {
+            System.out.println(this.nome + id + " foi derrotado!");
         }
     }
 
@@ -62,12 +59,11 @@ public abstract class Cacador extends Combatentes {
     public void atacar(Combatentes alvo){  
         // habilidade unica: acerto critico     
             if (Math.random() <= precisao){
-                System.out.println(this.nome + id + " acertou um Tiro Crítico e causou " + (ataque * 2) + " de dano!");
+                System.out.println(this.nome + id + " acertou um Tiro Crítico!");
                 alvo.receberDano(ataque * 2);    
             }
-            else{ 
-                System.out.println(this.nome + id + " atacou e causou " + ataque + " de dano.");
-                alvo.receberDano(ataque);
+            else{
+            alvo.receberDano(ataque);
             }
 
         }
@@ -78,15 +74,15 @@ public abstract class Cacador extends Combatentes {
 
         public static class Cacador_Luz extends Cacador {
             public Cacador_Luz(int id, int x, int y) {
-                super("Caçador da Luz", 70, 0.3, 30, id, x, y, "../imagens/cacador_luz.png");
-                CacadorImagem.putClientProperty( "id", "Cacador da Luz");
+                super("Caçador da Luz", 70, 0.3, 30, id, x, y, "/imagens/cacador_luz.png");
+                imagem.putClientProperty( "id", "Cacador da Luz");
             }
         }
 
         public static class Cacador_Sombra extends Cacador {
             public Cacador_Sombra(int id, int x, int y) {
-                super("Caçador da Sombra", 70, 0.3, 30, id, x, y, "../imagens/cacador_sombra.png");
-                CacadorImagem.putClientProperty( "id", "Cacador da Sombra");
+                super("Caçador da Sombra", 70, 0.3, 30, id, x, y, "/imagens/cacador_sombra.png");
+                imagem.putClientProperty( "id", "Cacador da Sombra");
             }
         }
 }

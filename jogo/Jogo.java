@@ -1,7 +1,9 @@
 package jogo;
-
+import ui.Arena;
+import jogo.Combatentes;
 import java.util.*;
 import personagens.*;
+import javax.swing.JLabel;
 
 public class Jogo {
     private String nomeFaccao; // "Aliança da Luz" ou "Horda das Sombras"
@@ -21,6 +23,13 @@ public class Jogo {
         recrutar("Arcanista", qtdMagos);
         recrutar("Cacador", qtdArqueiros);
     }
+    public List<Combatentes> getVivos() {
+        List<Combatentes> vivos = new ArrayList<>();
+        for (Combatentes c : exercito) {
+            if (c.estaVivo()) vivos.add(c);
+        }
+        return vivos;
+    }
 
     // Método auxiliar para criar as instâncias (Fábrica simples)
     private void recrutar(String tipo, int qtd) {
@@ -28,10 +37,10 @@ public class Jogo {
 
             switch (tipo) {
                 case "Guardiao" ->
-                    exercito.add( nomeFaccao.contains("Luz")? new Guardiao.Guardiao_Luz(i, 0 , 0) : new Guardiao.Guardiao_Sombra(i,0,0) );
+                    exercito.add( nomeFaccao.contains("Luz")? new Guardiao.Guardiao_Luz(i, 0, 0) : new Guardiao.Guardiao_Sombra(i,500,200) );
 
                 case "Arcanista" ->
-                    exercito.add( nomeFaccao.contains("Luz")? new Arcanista.ArcanistaLuz(i, 0 , 0): new Arcanista.ArcanistaSombra(i,0,0) );
+                    exercito.add( nomeFaccao.contains("Luz")? new Arcanista.ArcanistaLuz(i, 0 , -0): new Arcanista.ArcanistaSombra(i,0,0) );
 
                 case "Cacador" ->
                     exercito.add( nomeFaccao.contains("Luz") ? new Cacador.Cacador_Luz(i, 0 , 0) : new Cacador.Cacador_Sombra(i,0,0)  );
@@ -39,16 +48,11 @@ public class Jogo {
         }
     }
 
+    // Adicione este método na classe Arena.java
+
+
    public String getNomeFaccao() {
         return nomeFaccao;
-    }
-
-    public List<Combatentes> getVivos() {
-        List<Combatentes> vivos = new ArrayList<>();
-        for (Combatentes c : exercito) {
-            if (c.estaVivo()) vivos.add(c);
-        }
-        return vivos;
     }
 
     public boolean temSoldadosVivos() {
@@ -65,31 +69,31 @@ public class Jogo {
         return vivos.get(new Random().nextInt(vivos.size()));
     }
 
-    public void removerMortos() {
+    public  void removerMortos() {
         exercito.removeIf(c -> !c.estaVivo());
+        
     }
 
+    
     public static void executarRodada(Jogo luz, Jogo sombra) {
+        
+        Combatentes atacanteLuz = luz.alvoAleatorio();
+        Combatentes atacanteSombra = sombra.alvoAleatorio();
+        if (!luz.temSoldadosVivos()  || !sombra.temSoldadosVivos()) return;
 
-        List<Combatentes> ordem = new ArrayList<>();
-        ordem.addAll(luz.getVivos());
-        ordem.addAll(sombra.getVivos());
-        Collections.shuffle(ordem);
-
-        for (Combatentes atacante : ordem) {
-
-            if (!atacante.estaVivo()) continue;
-            if (!luz.temSoldadosVivos() || !sombra.temSoldadosVivos()) break;
-
-            Jogo inimigo = luz.pertence(atacante) ? sombra : luz;
-            Combatentes alvo = inimigo.alvoAleatorio();
-
-            if (alvo != null) {
-                atacante.atacar(alvo);
-                if (!alvo.estaVivo()) {
-                    inimigo.removerMortos();
-                }
-            }
-        }
+        atacanteLuz.moverPara(450, 300);
+        atacanteSombra.moverPara(550, 300);
+        atacanteLuz.atacar(atacanteSombra);
+        
+        if (atacanteSombra.estaVivo()) {
+        atacanteSombra.atacar(atacanteLuz);
     }
+    
+    atacanteLuz.voltarPosicao();
+    atacanteSombra.voltarPosicao();
+    luz.removerMortos();
+    sombra.removerMortos();
+}
+
+    
 }

@@ -11,7 +11,6 @@ public  abstract class Guardiao extends Combatentes {
     private int vigor;
     private final int ataque;
     private final int id;
-    JLabel GuardiaoImagem;
     URL url;
 
    public Guardiao(String nome, int vida, int ataque, int id, int x, int y, String caminho) {
@@ -20,25 +19,12 @@ public  abstract class Guardiao extends Combatentes {
         this.vigor = 100;
         this.ataque = ataque;
 
-        url = getClass().getResource(caminho);
-
-        if(url != null){
-            ImageIcon icon = new ImageIcon(url);
-            GuardiaoImagem = new JLabel(icon);
-        }
-        else{
-            System.out.println("Imagem nao encontrada: " + caminho);
-            GuardiaoImagem = new JLabel("Imagem nao encontrada");
-        }
-        GuardiaoImagem.setName(nome);
-        GuardiaoImagem.setBounds(x, y, 200, 200);
-
+        imagem = new JLabel(new ImageIcon(getClass().getResource(caminho)));
+        imagem.setBounds(x, y, 200, 200);
     }
 
     public void Bencao() {
         if(Math.random() <= 0.05) {
-            System.out.println(this.nome + id + " recebeu uma bênção e recuperou vida!");
-            
             if(this.vida < 120){
                 this.vida = 120;
             }
@@ -54,40 +40,26 @@ public  abstract class Guardiao extends Combatentes {
             this.vigor = 0;
                 dano = 0;
                 this.vida += 10;
-            System.out.println(this.nome + id +  " utilizou todo seu vigor para bloquear o ataque e ganhou mais resistência!" + " Vida restante: " + this.vida);
+            System.out.println(this.nome + id +  " utilizou todo seu vigor para bloquear o ataque e ganhou mais resistência!");
             }
             else if (this.vigor > 0){
             
                 if(this.vigor >= dano){
                     this.vigor -= dano;
-                    dano = 0;
-                    System.out.println(this.nome + id + "Utilizou seu Vigor para bloquear o ataque!" + " Vida restante: " + this.vida);
+                        dano = 0;
+                    System.out.println(this.nome + id + "Utilizou seu Vigor para bloquear o ataque!");
                 }
                 else { 
                     dano -= this.vigor;
                     this.vigor = 0;
-                    
-                    System.out.println(this.nome + id + "utilizou seu vigor para bloquear parte do ataque!" + " Vida restante: " + this.vida);
-                    this.vida -= dano;
+                    System.out.println(this.nome + id + "utilizou seu vigor para bloquear parte do ataque!");
                 }
 
             }
         }
         else {
-            System.out.println(this.nome + id + " não conseguiu usar seu vigor para defender o ataque.");
-            this.vida -= dano;
+            System.out.println(this.nome + " não conseguiu usar seu vigor para defender o ataque.");
         }
-
-        if(this.vida < 0){
-                    this.vida = 0;
-                }
-
-        System.out.println(this.nome + id + " recebeu " + dano + " pontos de dano. Vida restante: " + this.vida);
-                
-        if(this.vida == 0  ){
-            System.out.println(this.nome + id + " foi derrotado!");
-        }
-
     }    
     @Override
     public void receberDano(int dano){
@@ -95,6 +67,18 @@ public  abstract class Guardiao extends Combatentes {
         Bencao();
         
         Defender(dano);
+        
+        this.vida -= dano;
+            
+                
+        if(this.vida < 0){
+            this.vida = 0;
+        }
+            System.out.println(this.nome + " recebeu " + dano + " pontos de dano. Vida restante: " + this.vida);
+        
+        if(this.vida == 0  ){
+            System.out.println(this.nome + " foi derrotado!");
+        }
             
     }
 
@@ -102,23 +86,25 @@ public  abstract class Guardiao extends Combatentes {
     @Override
     public void atacar(Combatentes alvo){  
         this.vigor += 40;
-        System.out.println(this.nome + id + " atacou e causou " + this.ataque + " de dano.");
         alvo.receberDano(this.ataque);
     }
 
      // ===== VARIAÇÕES =====
     public static class Guardiao_Luz extends Guardiao {
         public Guardiao_Luz(int id, int x, int y) {
-            super("Guardião da Luz", 120, 20,id, x, y, "../imagens/guardiao_luz.png");
-            GuardiaoImagem.putClientProperty("id", "Guardiao_Luz");
+            super("Guardião da Luz", 120, 20,id, x, y, "/imagens/guardiao_luz.png");
+            imagem.putClientProperty("id", "Guardiao_Luz");
         }
     }
 
     public static class Guardiao_Sombra extends Guardiao {
         public Guardiao_Sombra(int  id, int x, int y) {
-            super("Guardião da Sombra", 120, 20, id, x, y, "../imagens/guardiao_sombra.png");
-            GuardiaoImagem.putClientProperty("id", "Guardiao_Sombra");
+            super("Guardião da Sombra", 120, 20, id, x, y, "/imagens/guardiao_sombra.png");
+            imagem.putClientProperty("id", "Guardiao_Sombra");
         }
     }
+    public JLabel getImagem() {
+    return imagem;
+}
 }
 
