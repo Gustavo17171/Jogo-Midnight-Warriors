@@ -25,6 +25,8 @@ public  abstract class Guardiao extends Combatentes {
 
     public void Bencao() {
         if(Math.random() <= 0.05) {
+            System.out.println(this.nome + id + " recebeu uma bênção e recuperou vida!");
+            
             if(this.vida < 120){
                 this.vida = 120;
             }
@@ -40,26 +42,40 @@ public  abstract class Guardiao extends Combatentes {
             this.vigor = 0;
                 dano = 0;
                 this.vida += 10;
-            System.out.println(this.nome + id +  " utilizou todo seu vigor para bloquear o ataque e ganhou mais resistência!");
+            System.out.println(this.nome + id +  " utilizou todo seu vigor para bloquear o ataque e ganhou mais resistência!" + " Vida restante: " + this.vida);
             }
             else if (this.vigor > 0){
             
                 if(this.vigor >= dano){
                     this.vigor -= dano;
-                        dano = 0;
-                    System.out.println(this.nome + id + "Utilizou seu Vigor para bloquear o ataque!");
+                    dano = 0;
+                    System.out.println(this.nome + id + "Utilizou seu Vigor para bloquear o ataque!" + " Vida restante: " + this.vida);
                 }
                 else { 
                     dano -= this.vigor;
                     this.vigor = 0;
-                    System.out.println(this.nome + id + "utilizou seu vigor para bloquear parte do ataque!");
+                    
+                    System.out.println(this.nome + id + "utilizou seu vigor para bloquear parte do ataque!" + " Vida restante: " + this.vida);
+                    this.vida -= dano;
                 }
 
             }
         }
         else {
-            System.out.println(this.nome + " não conseguiu usar seu vigor para defender o ataque.");
+            System.out.println(this.nome + id + " não conseguiu usar seu vigor para defender o ataque.");
+            this.vida -= dano;
         }
+
+        if(this.vida < 0){
+                    this.vida = 0;
+                }
+
+        System.out.println(this.nome + id + " recebeu " + dano + " pontos de dano. Vida restante: " + this.vida);
+                
+        if(this.vida == 0  ){
+            System.out.println(this.nome + id + " foi derrotado!");
+        }
+
     }    
     @Override
     public void receberDano(int dano){
@@ -67,18 +83,6 @@ public  abstract class Guardiao extends Combatentes {
         Bencao();
         
         Defender(dano);
-        
-        this.vida -= dano;
-            
-                
-        if(this.vida < 0){
-            this.vida = 0;
-        }
-            System.out.println(this.nome + " recebeu " + dano + " pontos de dano. Vida restante: " + this.vida);
-        
-        if(this.vida == 0  ){
-            System.out.println(this.nome + " foi derrotado!");
-        }
             
     }
 
@@ -86,6 +90,7 @@ public  abstract class Guardiao extends Combatentes {
     @Override
     public void atacar(Combatentes alvo){  
         this.vigor += 40;
+        System.out.println(this.nome + id + " atacou e causou " + this.ataque + " de dano.");
         alvo.receberDano(this.ataque);
     }
 
