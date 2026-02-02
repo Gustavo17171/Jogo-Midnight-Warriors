@@ -6,6 +6,7 @@ import java.net.URL;
 import java.awt.*;
 import java.io.OutputStream;
 import java.io.PrintStream;
+
 import jogo.Combatentes;
 import jogo.Jogo;
 
@@ -14,12 +15,16 @@ public class Arena extends JPanel {
     private JLabel fundo;
     private final TelaPrincipal frame;
     private Timer timerBatalha;
+
     private final Jogo equipeLuz;
     private final Jogo equipeSombra;
+
+    // HUD
     private JLabel lblLuz;
     private JLabel lblSombra;
+    private JLabel titulo;
 
-   // ================= LOG VISUAL =================
+    // LOG
     private JTextArea logArea;
 
     public Arena(TelaPrincipal frame, int gL, int mL, int aL, int gS, int mS, int aS) {
@@ -31,7 +36,7 @@ public class Arena extends JPanel {
         setLayout(null);
 
         criarFundo();
-        criarInterface();
+        criarInterface();   // HUD
         criarLog();
         desenharCombatentes();
 
@@ -40,6 +45,53 @@ public class Arena extends JPanel {
         iniciarBatalha();
 
         setComponentZOrder(fundo, getComponentCount() - 1);
+    }
+
+    // ================= FUNDO =================
+    private void criarFundo() {
+        URL imgURL = getClass().getResource("/imagens/Tela_Arena.png");
+
+        if (imgURL != null) {
+            Image img = new ImageIcon(imgURL).getImage()
+                    .getScaledInstance(1000, 600, Image.SCALE_SMOOTH);
+            fundo = new JLabel(new ImageIcon(img));
+        } else {
+            fundo = new JLabel("Imagem não encontrada");
+        }
+
+        fundo.setBounds(0, 0, 1000, 600);
+        add(fundo);
+    }
+
+    // ================= HUD =================
+    private void criarInterface() {
+
+        titulo = new JLabel("ARENA DE COMBATE");
+        titulo.setBounds(360, 20, 320, 30);
+        titulo.setFont(new Font("Arial", Font.BOLD, 30));
+        titulo.setForeground(Color.WHITE);
+        add(titulo);
+
+        lblLuz = new JLabel();
+        lblLuz.setBounds(150, 80, 300, 30);
+        lblLuz.setFont(new Font("Arial", Font.BOLD, 30));
+        lblLuz.setForeground(Color.WHITE);
+        add(lblLuz);
+
+        lblSombra = new JLabel();
+        lblSombra.setBounds(600, 80, 300, 30);
+        lblSombra.setFont(new Font("Arial", Font.BOLD, 30));
+        lblSombra.setForeground(Color.WHITE);
+        add(lblSombra);
+
+        atualizarHUD();
+    }
+
+    private void atualizarHUD() {
+        SwingUtilities.invokeLater(() -> {
+            lblLuz.setText("Luz: " + equipeLuz.getVivos().size() + " vivos");
+            lblSombra.setText("Sombra: " + equipeSombra.getVivos().size() + " vivos");
+        });
     }
 
     // ================= LOG =================
@@ -65,52 +117,12 @@ public class Arena extends JPanel {
         System.setOut(ps);
     }
 
-    // ================= FUNDO =================
-    private void criarFundo() {
-        URL imgURL = getClass().getResource("/imagens/Tela_Arena.png");
-
-        if (imgURL != null) {
-            Image img = new ImageIcon(imgURL).getImage()
-                    .getScaledInstance(1000, 600, Image.SCALE_SMOOTH);
-            fundo = new JLabel(new ImageIcon(img));
-        } else {
-            fundo = new JLabel("Imagem não encontrada");
-        }
-
-        fundo.setBounds(0, 0, 1000, 600);
-        add(fundo);
-    }
-
-    // ================= INTERFACE =================
-    private void criarInterface() {
-        JLabel titulo = new JLabel("ARENA DE COMBATE");
-        titulo.setBounds(360, 20, 200, 30);
-        add(titulo);
-
-        lblLuz = new JLabel();
-        lblLuz.setBounds(150, 80, 300, 30);
-        add(lblLuz);
-
-        lblSombra = new JLabel();
-        lblSombra.setBounds(500, 80, 300, 30);
-        add(lblSombra);
-
-        atualizarHUD();
-    }
-
-    private void atualizarHUD() {
-        lblLuz.setText("Luz: " + equipeLuz.getVivos().size() + " vivos");
-        lblSombra.setText("Sombra: " + equipeSombra.getVivos().size() + " vivos");
-    }
-
     // ================= BATALHA =================
     private void iniciarBatalha() {
         timerBatalha = new Timer(2200, e -> {
 
             if (equipeLuz.temSoldadosVivos() && equipeSombra.temSoldadosVivos()) {
-
                 animarAtaque();
-
             } else {
                 timerBatalha.stop();
                 finalizarBatalha();
@@ -165,14 +177,26 @@ public class Arena extends JPanel {
 
     private void atualizarSprites() {
         removeAll();
-        criarInterface();
+
+        // HUD
+        add(titulo);
+        add(lblLuz);
+        add(lblSombra);
+
+        // Log
         criarLog();
+
+        // Combatentes
         desenharCombatentes();
+
+        // Fundo sempre atrás
         add(fundo);
         setComponentZOrder(fundo, getComponentCount() - 1);
+
         repaint();
     }
-    // ================= FINALIZA A BATALHA =================
+
+    // ================= FIM =================
     private void finalizarBatalha() {
         MusicManager.stop();
         JOptionPane.showMessageDialog(this,
