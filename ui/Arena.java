@@ -10,7 +10,7 @@ import jogo.Combatentes;
 import jogo.Jogo;
 
 
-import java.awt.Image;
+import java.awt.*;
 public class Arena extends JPanel {
     private JLabel fundo;
     private final TelaPrincipal frame;
@@ -121,7 +121,9 @@ public class Arena extends JPanel {
 
     private void criarInterface() {
         JLabel titulo = new JLabel("ARENA DE COMBATE");
-        titulo.setBounds(360, 20, 200, 30);
+        titulo.setBounds(360, 20, 320, 30);
+        titulo.setFont(new Font("Arial", Font.BOLD, 30));
+        titulo.setForeground(Color.WHITE);
         add(titulo);
 
         lblLuz = new JLabel();
@@ -129,7 +131,7 @@ public class Arena extends JPanel {
         add(lblLuz);
 
         lblSombra = new JLabel();
-        lblSombra.setBounds(500, 80, 300, 30);
+        lblSombra.setBounds(600, 80, 300, 30);
         add(lblSombra);
 
         atualizarHUD();
@@ -145,7 +147,9 @@ private void atualizarSprites() {
         add(lblLuz);
         add(lblSombra);
         JLabel titulo = new JLabel("ARENA DE COMBATE");
-        titulo.setBounds(360, 20, 200, 30);
+        titulo.setBounds(360, 20, 320, 30);
+        titulo.setFont(new Font("Arial", Font.BOLD, 30));
+        titulo.setForeground(Color.WHITE);
         add(titulo);
 
 
@@ -166,8 +170,13 @@ private void atualizarSprites() {
 
     private void atualizarHUD() {
         SwingUtilities.invokeLater(() -> {
-            lblLuz.setText("Luz: " + equipeLuz.getVivos().size() + " vivos");            
+            lblLuz.setText("Luz: " + equipeLuz.getVivos().size() + " vivos");
+            lblLuz.setForeground(Color.WHITE);
+            lblLuz.setFont(new Font("Arial", Font.BOLD, 30));
+            
             lblSombra.setText("Sombra: " + equipeSombra.getVivos().size() + " vivos");
+            lblSombra.setForeground(Color.WHITE);
+            lblSombra.setFont(new Font("Arial", Font.BOLD, 30));            
         });
     }
 
