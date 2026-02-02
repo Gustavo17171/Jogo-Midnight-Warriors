@@ -1,6 +1,5 @@
 import javax.swing.SwingUtilities;
 import ui.TelaPrincipal;
-import java.awt.Image;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,7 +7,7 @@ public class Main {
     }
 }
 
-// ================= COMANDOS PARA OPERAR AS PASTAS =================
+// ================= COMANDOS PARA" OPERAR AS PASTAS =================
 /*
 
 Remove-Item -Recurse -Force bin\audio
